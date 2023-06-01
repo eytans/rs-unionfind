@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 license = "GPL-3.0"
 description = "A Rust implementation of the Union-Find data structure"
+homepage = "https://github.com/eytans/rs-unionfind"
+repository = "https://github.com/eytans/rs-unionfind"
+documentation = "https://docs.rs/unionfind"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
