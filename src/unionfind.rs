@@ -11,7 +11,7 @@ type Rank = usize;
 /// # Examples
 /// 
 /// ```
-/// use unionfind::UnionFind;
+/// use hash_unionfind::UnionFind;
 /// 
 /// let mut uf = UnionFind::default();
 /// let a = uf.insert("a");
@@ -20,17 +20,17 @@ type Rank = usize;
 /// let d = uf.insert("d");
 /// let e = uf.insert("e");
 /// 
-/// uf.union(a, b);
-/// uf.union(b, c);
+/// uf.union(&"a", &"b");
+/// uf.union(&"b", &"c");
 /// 
-/// uf.union(d, e);
+/// uf.union(&"d", &"e");
 /// 
-/// assert_eq!(uf.find(a), uf.find(c));
-/// assert_ne!(uf.find(a), uf.find(d));
+/// assert_eq!(uf.find(&"a"), uf.find(&"c"));
+/// assert_ne!(uf.find(&"a"), uf.find(&"d"));
 /// 
-/// uf.union(a, d);
+/// uf.union(&"a", &"d");
 /// 
-/// assert_eq!(uf.find(a), uf.find(e));
+/// assert_eq!(uf.find(&"a"), uf.find(&"e"));
 #[derive(Debug, Clone, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct UnionFind<T: Hash + Eq + Clone + Debug> {
@@ -39,6 +39,12 @@ pub struct UnionFind<T: Hash + Eq + Clone + Debug> {
 }
 
 impl<T: Hash + Eq + Clone + Debug> UnionFind<T> {
+    pub fn new() -> Self {
+        Self {
+            parents: RefCell::new(IndexMap::new()),
+        }
+    }
+
     pub fn size(&self) -> usize {
         self.parents.borrow().len()
     }
@@ -141,7 +147,7 @@ mod tests {
 
     #[test]
     fn test_on_str() {
-        let mut uf = UnionFind::default();
+        let mut uf = UnionFind::new();
         uf.insert("a");
         uf.insert("b");
         uf.insert("c");
